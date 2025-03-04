@@ -28,7 +28,7 @@ try:
     spreadsheet = client.open_by_url(SHEET_URL)
     sheet = spreadsheet.sheet1
     data = sheet.get_all_records()
-    df = pd.DataFrame(data)
+  #  df = pd.DataFrame(data)
     st.success("✅ โหลดข้อมูลจาก Google Sheets สำเร็จ!")
 except Exception as e:
     st.error(f"❌ ไม่สามารถโหลดข้อมูลจาก Google Sheets: {e}")
