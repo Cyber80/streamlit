@@ -22,7 +22,7 @@ except Exception as e:
 client = gspread.authorize(credentials)
 
 # URL ของ Google Sheets
-SHEET_URL = "https://docs.google.com/spreadsheets/d/1TgmPK6cF2uy1_yuctQQJBgp23hw5M8OD31JQ7AYemjo/edit"
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1TgmPK6cF2uy1_yuctQQJBgp23hw5M8OD31JQ7AYemjo/edit?gid=0#gid=0"
 
 try:
     spreadsheet = client.open_by_url(SHEET_URL)
