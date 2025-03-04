@@ -6,8 +6,9 @@ import matplotlib.pyplot as plt
 
 # โหลด credentials จาก Streamlit Secrets
 try:
+    SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
     credentials_info = st.secrets["gcp_service_account"]
-    credentials = Credentials.from_service_account_info(credentials_info)
+    credentials = Credentials.from_service_account_info(credentials_info, scopes=SCOPES)
 except KeyError:
     st.error("❌ ไม่พบข้อมูล API Key! ตรวจสอบ secrets.toml ใน Streamlit Cloud")
     st.stop()
