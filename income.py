@@ -10,7 +10,7 @@ credentials = Credentials.from_service_account_info(credentials_info)
 # เชื่อมต่อ Google Sheets
 client = gspread.authorize(credentials)
 #SHEET_URL = "https://docs.google.com/spreadsheets/d/xxxxxxxxxxxx/edit"
-SHEET_URL ="https://docs.google.com/spreadsheets/d/1TgmPK6cF2uy1_yuctQQJBgp23hw5M8OD31JQ7AYemjo/edit?gid=0#gid=0"
+SHEET_URL ="https://docs.google.com/spreadsheets/d/1TgmPK6cF2uy1_yuctQQJBgp23hw5M8OD31JQ7AYemjo/edit"
 spreadsheet = client.open_by_url(SHEET_URL)
 sheet = spreadsheet.sheet1
 
