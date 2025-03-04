@@ -21,18 +21,20 @@ except Exception as e:
 # เชื่อมต่อ Google Sheets
 client = gspread.authorize(credentials)
 
-# URL ของ Google Sheets
-SHEET_URL = "https://docs.google.com/spreadsheets/d/1TgmPK6cF2uy1_yuctQQJBgp23hw5M8OD31JQ7AYemjo/edit?gid=0#gid=0"
+# ใช้ **Spreadsheet ID** แทน URL
+SHEET_ID = "1TgmPK6cF2uy1_yuctQQJBgp23hw5M8OD31JQ7AYemjo"
 
 try:
-    spreadsheet = client.open_by_url(SHEET_URL)
+    spreadsheet = client.open_by_key(SHEET_ID)  # ใช้ open_by_key() แทน open_by_url()
     sheet = spreadsheet.sheet1
     data = sheet.get_all_records()
-  #  df = pd.DataFrame(data)
-    st.success("✅ โหลดข้อมูลจาก Google Sheets สำเร็จ!")
+    df = pd.DataFrame(data)
+
+    if df.empty:
+        st.warning("⚠️ Google Sheets ว่างเปล่า! กรุณาเพิ่มข้อมูลลงไปก่อน")
+    else:
+        st.success("✅ โหลดข้อมูลจาก Google Sheets สำเร็จ!")
+        st.dataframe(df)  # แสดงข้อมูล
+
 except Exception as e:
     st.error(f"❌ ไม่สามารถโหลดข้อมูลจาก Google Sheets: {e}")
-    st.stop()
-
-# แสดงข้อมูล
-st.dataframe(df)
