@@ -1,7 +1,5 @@
 import time
-import pyautogui
 import pyperclip
-import pygetwindow as gw
 import streamlit as st
 
 st.title("AutoMark V.1")
@@ -16,34 +14,20 @@ st.write("############ ครูเจษฎา ชมเชย ############ ")
 
 # ฟังก์ชั่นสำหรับการทำงาน
 def autofill():
-    # ค้นหาหน้าต่างที่มีคำว่า "Google Chrome"
-    chrome_windows = [win for win in gw.getWindowsWithTitle("Google Chrome") if "Google Chrome" in win.title]
-
-    if chrome_windows:
-        chrome_window = chrome_windows[0]  # เลือกหน้าต่างแรกที่พบ
-        chrome_window.restore()  # กู้คืนหน้าต่างหากถูกย่อขนาด
-        chrome_window.activate()  # สลับไปที่หน้าต่าง Google Chrome
-        time.sleep(1)  # หน่วงเวลาให้ Chrome พร้อมใช้งาน
-    else:
-        st.error("❌ ไม่พบหน้าต่าง Google Chrome")
-        return
-
     # ดึงข้อมูลจาก Clipboard (ต้อง Copy ข้อมูลจาก Google Sheet มาก่อน)
     clipboard_data = pyperclip.paste()
 
     # แปลงข้อมูลเป็นแถวและคอลัมน์
     rows = clipboard_data.strip().split("\n")
 
-    # เริ่มวางข้อมูลใน Chrome
+    # เริ่มวางข้อมูลในช่องฟอร์ม
     for row in rows:
         columns = row.split("\t")  # แยกข้อมูลแต่ละคอลัมน์
         for cell in columns:
             pyperclip.copy(cell)  # คัดลอกข้อมูลแต่ละเซลล์
-            pyautogui.hotkey("ctrl", "v")  # วางข้อมูลลงฟอร์ม
-            time.sleep(0.2)  # รอให้ Chrome รับค่า
-            pyautogui.press("tab")  # กด Tab เพื่อเลื่อนไปช่องถัดไป
-        #pyautogui.press("enter")  # กด Enter เพื่อขึ้นบรรทัดใหม่
-        #time.sleep(0.2)
+            # ที่นี่เราไม่สามารถใช้ GUI ได้แล้ว ดังนั้นสามารถใช้วิธีการวางข้อมูลผ่านฟอร์ม (ที่ไม่ได้ทำโดยอัตโนมัติใน Streamlit)
+            st.text_input("กรอกข้อมูล", value=cell)  # แสดงช่องให้กรอกข้อมูล
+            time.sleep(0.2)  # รอให้ระบบรับค่า
 
 # ฟังก์ชั่นหลักในการสร้าง UI
 def main(): 
@@ -52,7 +36,6 @@ def main():
         st.info("กำลังเริ่มการกรอกคะแนน...")
         autofill()
         st.success("กรอกคะแนนเสร็จสิ้น..โปรดตรวจทานความถูกต้อง ")
-
 
 if __name__ == "__main__":
     main()
